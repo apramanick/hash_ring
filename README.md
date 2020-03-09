@@ -1,8 +1,9 @@
 # hash_ring
 
-A clone of the last published version (version 1.3.1) of Python hash_ring from PyPi.
-I created this clone since we needed to continue using the original project in Python
-3.x, and the original had stopped being maintained, and was stuck at Python 2.x.
+A clone of the last published version (version 1.3.1) of Python hash_ring from PyPi,
+written by Amir Salihefendic.  I created this clone since we needed to continue
+using the original project in Python 3.x, and the original had stopped being maintained,
+and was stuck at Python 2.x.
 
 The only modifications I have made is to port this to Python 3.8, and remove the
 `memcache_ring` module, since we never use it, and it was not practical for me to test
