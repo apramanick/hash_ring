@@ -32,7 +32,7 @@ More information about consistent hashing can be read in these articles:
 * [Consistent hashing and random trees](http://citeseerx.ist.psu.edu/legacymapper?did=38148)
 
 
-## Example
+# Examples
 
 Basic example of usage:
 
@@ -56,4 +56,10 @@ Example using weights:
 
     ring = HashRing(servers, weights)
     server = ring.get_node('my_key')
+
+# Installation
+
+    $ git clone https://github.com/apramanick/hash_ring.git
+    $ cd hash_ring
+    $ pip3.8 install .
 
