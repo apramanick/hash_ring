@@ -5,12 +5,12 @@ I created this clone since we needed to continue using the original project in P
 3.x, and the original had stopped being maintained, and was stuck at Python 2.x.
 
 The only modifications I have made is to port this to Python 3.8, and remove the
-memcache_ring module, since I never use it, and it was not practical for me to test
+`memcache_ring` module, since we never use it, and it was not practical for me to test
 it out.
 
 Currently, I have no plans to support this long-term, since this is a temporary
-measure to port our own code to Python 3.x as painlessly as possible; in fiture,
-we might move to using a different Python consistent hashing implementation,
+measure to port our own code to Python 3.x as painlessly as possible; in future,
+we might move to using a different consistent hashing implementation in Python,
 at which time I will drop support for this.
 
 The following description is mostly from the original package.
