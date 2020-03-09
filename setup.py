@@ -35,14 +35,14 @@ def list_files(path):
             yield fn
 
 setup(name='hash_ring',
-      version = '1.4.0',
+      version = '1.3.1',
       author="Amir Salihefendic",
       author_email="amix@amix.dk",
       url="http://www.amix.dk/",
       classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: BSD License",
+        "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",
