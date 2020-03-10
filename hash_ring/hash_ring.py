@@ -169,7 +169,8 @@ class HashRing(object):
 
         if int(sys.version_info.major) >= 3:
             # In Python 3, m.digest() already returns bytes (and not a string, as in Python 2).
-            # Hence, we can simply return the digest as-is:
-            return m.digest()
+            # Hence, we can simply return the digest as-is; however, to mimic as closely as
+            # possible what the Python 2.x code does, we return a bytearray of the digest:
+            return bytearray(m.digest())
         else:
             return map(ord, m.digest())
