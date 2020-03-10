@@ -1,6 +1,6 @@
 Metadata-Version: 1.0
 Name: hash_ring
-Version: 1.3.1
+Version: 1.4.0
 Summary: Implements consistent hashing in Python (using md5 as hashing function).
 Home-page: http://www.amix.dk/
 Author: Amir Salihefendic
@@ -49,9 +49,7 @@ Description: About hash_ring
             ring = HashRing(servers, weights)
             server = ring.get_node('my_key')
 
-        The code should be clean and simple.
-
-Keywords: memcached hashing hash consistent
+Keywords: hashing hash consistent
 Platform: Any
 Classifier: Development Status :: 5 - Production/Stable
 Classifier: Intended Audience :: Developers

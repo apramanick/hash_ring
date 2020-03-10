@@ -60,7 +60,18 @@ Example using weights:
 
 # Installation
 
+Assuming you are on a Unix-like system:
+
     $ git clone https://github.com/apramanick/hash_ring.git
     $ cd hash_ring
     $ pip3.8 install .
 
+# Testing
+
+The original hash_ring project had no unit tests, and this one doesn't have any either.
+However, I have added a simple, quick *sanity check* to gain some amount of confidence
+that the Python 3.8-ported code is functionally equivalent to the original Python 2.x code.
+To run this (assuming you are on a Unix-like system):
+
+    cd tests
+    ./test_port.sh <path-to-your-python2-interpreter> <path-to-your-python3-interpreter>

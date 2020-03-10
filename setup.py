@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 #
 # MIT License
 # 
@@ -26,6 +25,7 @@ import os
 
 from setuptools import setup
 
+
 def list_files(path):
     for fn in os.listdir(path):
         if fn.startswith('.'):
@@ -34,8 +34,9 @@ def list_files(path):
         if os.path.isfile(fn):
             yield fn
 
+
 setup(name='hash_ring',
-      version = '1.3.1',
+      version='1.4.0',
       author="Amir Salihefendic",
       author_email="amix@amix.dk",
       url="http://www.amix.dk/",
@@ -66,7 +67,7 @@ does not significantly change the mapping of keys to slots.
 
 More information about consistent hashing can be read in these articles:
 
-* Web Caching with Consistent Hashing <http://www8.org/w8-papers/2a-webserver/caching/paper2.html>
+* Web Caching with Consistent Hashing <http://www.cs.cmu.edu/~srini/15-744/S02/readings/K+99.html>
 * Consistent hashing and random trees <http://citeseerx.ist.psu.edu/legacymapper?did=38148>
 
 
@@ -96,5 +97,4 @@ Example using weights::
     ring = HashRing(servers, weights)
     server = ring.get_node('my_key')
 
-The code should be clean and simple.
 """)

@@ -1,6 +1,7 @@
-from hash_ring import HashRing
+# -*- coding: utf-8 -*-
+import sys
 
-try:
-    from memcache_ring import MemcacheRing
-except ImportError, e:
-    pass
+if int(sys.version_info.major) >= 3:
+    from .hash_ring import HashRing
+else:
+    from hash_ring import HashRing

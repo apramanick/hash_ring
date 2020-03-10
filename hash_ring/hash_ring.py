@@ -6,30 +6,20 @@
     the number of server nodes can increase or decrease (like in memcached).
 
     Consistent hashing is a scheme that provides a hash table functionality
-    in a way that the adding or removing of one slot
-    does not significantly change the mapping of keys to slots.
-
-    More information about consistent hashing can be read in these articles:
-
-        "Web Caching with Consistent Hashing":
-            http://www8.org/w8-papers/2a-webserver/caching/paper2.html
-
-        "Consistent hashing and random trees:
-        Distributed caching protocols for relieving hot spots on the World Wide Web (1997)":
-            http://citeseerx.ist.psu.edu/legacymapper?did=38148
-
+    in a way that the adding or removing of one slot does not significantly
+    change the mapping of keys to slots.
 
     Example of usage::
 
-        memcache_servers = ['192.168.0.246:11212',
-                            '192.168.0.247:11212',
-                            '192.168.0.249:11212']
+        servers = ['192.168.0.246:11212',
+                   '192.168.0.247:11212',
+                   '192.168.0.249:11212']
 
-        ring = HashRing(memcache_servers)
+        ring = HashRing(servers)
         server = ring.get_node('my_key')
 
     :copyright: 2008 by Amir Salihefendic.
-    :license: BSD
+    :license: MIT
 """
 
 import math
@@ -38,10 +28,12 @@ from bisect import bisect
 
 if sys.version_info >= (2, 5):
     import hashlib
-    md5_constructor = hashlib.md5
+    _MD5_CTOR = hashlib.md5
 else:
+    # noinspection PyUnresolvedReferences
     import md5
-    md5_constructor = md5.new
+    _MD5_CTOR = md5.new
+
 
 class HashRing(object):
 
@@ -74,13 +66,12 @@ class HashRing(object):
             if node in self.weights:
                 weight = self.weights.get(node)
 
-            factor = math.floor((40*len(self.nodes)*weight) / total_weight);
+            factor = math.floor((40 * len(self.nodes) * weight) / total_weight)
 
-            for j in xrange(0, int(factor)):
-                b_key = self._hash_digest( '%s-%s' % (node, j) )
-
-                for i in xrange(0, 3):
-                    key = self._hash_val(b_key, lambda x: x+i*4)
+            for j in range(0, int(factor)):
+                b_key = self._hash_digest('%s-%s' % (node, j))
+                for i in range(0, 3):
+                    key = self._hash_val(b_key, lambda x: x + i * 4)
                     self.ring[key] = node
                     self._sorted_keys.append(key)
 
@@ -94,7 +85,7 @@ class HashRing(object):
         pos = self.get_node_pos(string_key)
         if pos is None:
             return None
-        return self.ring[ self._sorted_keys[pos] ]
+        return self.ring[self._sorted_keys[pos]]
 
     def get_node_pos(self, string_key):
         """Given a string key a corresponding node in the hash ring is returned
@@ -115,6 +106,7 @@ class HashRing(object):
         else:
             return pos
 
+    # noinspection PyUnusedLocal
     def iterate_nodes(self, string_key, distinct=True):
         """Given a string key it returns the nodes as a generator that can hold the key.
 
@@ -128,6 +120,7 @@ class HashRing(object):
             yield None, None
 
         returned_values = set()
+
         def distinct_filter(value):
             if str(value) not in returned_values:
                 returned_values.add(str(value))
@@ -154,13 +147,29 @@ class HashRing(object):
         b_key = self._hash_digest(key)
         return self._hash_val(b_key, lambda x: x)
 
-    def _hash_val(self, b_key, entry_fn):
-        return (( b_key[entry_fn(3)] << 24)
-                |(b_key[entry_fn(2)] << 16)
-                |(b_key[entry_fn(1)] << 8)
-                | b_key[entry_fn(0)] )
+    @staticmethod
+    def _hash_val(b_key, entry_fn):
+        return ((b_key[entry_fn(3)] << 24)
+                | (b_key[entry_fn(2)] << 16)
+                | (b_key[entry_fn(1)] << 8)
+                | b_key[entry_fn(0)])
 
-    def _hash_digest(self, key):
-        m = md5_constructor()
-        m.update(key)
-        return map(ord, m.digest())
+    @staticmethod
+    def _hash_digest(key):
+        if int(sys.version_info.major) >= 3:
+            # In Python 3, all strings comprise Unicode code-points internally.  So, the
+            # key, which is a string, needs to be encoded before it can be hashed:
+            enc_key = key.encode('UTF-8')
+        else:
+            enc_key = key
+
+        # Create a fresh md5 algorithm object:
+        m = _MD5_CTOR()
+        m.update(enc_key)
+
+        if int(sys.version_info.major) >= 3:
+            # In Python 3, m.digest() already returns bytes (and not a string, as in Python 2).
+            # Hence, we can simply return the digest as-is:
+            return m.digest()
+        else:
+            return map(ord, m.digest())
