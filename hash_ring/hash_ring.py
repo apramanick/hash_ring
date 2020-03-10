@@ -19,7 +19,7 @@
         server = ring.get_node('my_key')
 
     :copyright: 2008 by Amir Salihefendic.
-    :license: MIT
+    :license: BSD
 """
 
 import math

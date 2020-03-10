@@ -5,7 +5,7 @@ Summary: Implements consistent hashing in Python (using md5 as hashing function)
 Home-page: http://www.amix.dk/
 Author: Amir Salihefendic
 Author-email: amix@amix.dk
-License: MIT
+License: BSD
 Description: About hash_ring
         ---------------
 
@@ -53,7 +53,7 @@ Keywords: hashing hash consistent
 Platform: Any
 Classifier: Development Status :: 5 - Production/Stable
 Classifier: Intended Audience :: Developers
-Classifier: License :: OSI Approved :: MIT License
+Classifier: License :: OSI Approved :: BSD License
 Classifier: Operating System :: OS Independent
 Classifier: Programming Language :: Python
 Classifier: Topic :: Software Development :: Libraries :: Python Modules
